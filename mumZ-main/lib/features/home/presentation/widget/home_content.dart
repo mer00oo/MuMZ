@@ -258,7 +258,7 @@ class _HomeContentState extends State<HomeContent> {
               mainAxisSpacing: 14,
               children: [
                 _gridCard(
-                  title: 'المساعد الذكي',
+                  title: '   هالووووووووالمساعد الذكي',
                   subtitle: 'اسأل عن امور الرضاعة و التطعيمات',
                   image: 'assets/images/11 (2).png',
                   colors: const [Color(0xFFFFF8DC), Color(0xFFFFE77A)],
