@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "155260643576",
+    "project_id": "mumz-213db",
+    "storage_bucket": "mumz-213db.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155260643576:android:d8bb19453696f8b723330d",
+        "android_client_info": {
+          "package_name": "com.example.mamyapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhbWXmokXNBXohb-o-G3atS90vzL-hVoI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
