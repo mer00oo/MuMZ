@@ -59,7 +59,7 @@ class _HomeContentState extends State<HomeContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF8F7F4),
       extendBodyBehindAppBar: true,
 
       body: SafeArea(
@@ -111,23 +111,23 @@ class _HomeContentState extends State<HomeContent> {
         });
       },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 250),
         padding: EdgeInsets.symmetric(
-          horizontal: isSelected ? 16 : 10,
+          horizontal: isSelected ? 14 : 10,
           vertical: 8,
         ),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFF7B3FA0).withOpacity(0.1)
+              ? const Color(0xFFB8C1EC).withOpacity(0.3)
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
           children: [
             Icon(
               icon,
               color: isSelected
-                  ? const Color(0xFF7B3FA0)
+                  ? const Color(0xFF6D5D6E)
                   : Colors.grey,
             ),
             if (isSelected) ...[
@@ -135,7 +135,7 @@ class _HomeContentState extends State<HomeContent> {
               Text(
                 label,
                 style: const TextStyle(
-                  color: Color(0xFF7B3FA0),
+                  color: Color(0xFF6D5D6E),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -158,16 +158,16 @@ class _HomeContentState extends State<HomeContent> {
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color(0xFFFF8C5A),
-                  Color(0xFFFFB347),
-                  Color(0xFFFFD4A3),
+                  Color(0xFFFFF1E6),
+                  Color(0xFFFFE0D2),
+                  Color(0xFFFFD6C2),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(36),
-                bottomRight: Radius.circular(36),
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
               ),
             ),
             child: Padding(
@@ -193,20 +193,20 @@ class _HomeContentState extends State<HomeContent> {
                   Row(
                     children: [
                       Container(
-                        width: 110,
-                        height: 110,
+                        width: 150,
+                        height: 150,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(25),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.15),
-                              blurRadius: 15,
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 10,
                               offset: const Offset(0, 6),
                             ),
                           ],
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(25),
                           child: Image.asset(
                             'assets/images/image (2).png',
                             fit: BoxFit.cover,
@@ -223,9 +223,9 @@ class _HomeContentState extends State<HomeContent> {
                             Text(
                               widget.userName,
                               style: const TextStyle(
-                                fontSize: 24,
+                                fontSize: 22,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                  color: Color(0xFF6D5D6E),
                               ),
                             ),
                             const SizedBox(height: 6),
@@ -254,14 +254,14 @@ class _HomeContentState extends State<HomeContent> {
               crossAxisCount: 2,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              crossAxisSpacing: 14,
-              mainAxisSpacing: 14,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
               children: [
                 _gridCard(
-                  title: '   هالووووووووالمساعد الذكي',
+                  title: '   المساعد الذكي',
                   subtitle: 'اسأل عن امور الرضاعة و التطعيمات',
                   image: 'assets/images/11 (2).png',
-                  colors: const [Color(0xFFFFF8DC), Color(0xFFFFE77A)],
+                  colors: const [Color(0xFFFFF7ED), Color(0xFFFFE4C7)],
                   onTap: () {
                     Navigator.push(
                       context,
@@ -275,7 +275,7 @@ class _HomeContentState extends State<HomeContent> {
                   title: 'قصص بصوتك',
                   subtitle: 'احكي قصة يومية ودع طفلك يلعب بصوتك',
                   image: 'assets/images/12 (2).png',
-                  colors: const [Color(0xFFFFE4E1), Color(0xFFFFB6B0)],
+                  colors: const [Color(0xFFFFF0F5), Color(0xFFFFD6E0)],
                   onTap: () {
                     Navigator.push(
                       context,
@@ -289,7 +289,7 @@ class _HomeContentState extends State<HomeContent> {
                   title: 'تحليل البكاء',
                   subtitle: 'سجلي صوت طفلك لتحليل سبب بكائه ',
                   image: 'assets/images/13 (1).png',
-                  colors: const [Color(0xFFEDE7F6), Color(0xFFCE93D8)],
+                  colors: const [Color(0xFFF3F0FF), Color(0xFFE0D7FF)],
                   onTap: () {
                     Navigator.push(
                       context,
