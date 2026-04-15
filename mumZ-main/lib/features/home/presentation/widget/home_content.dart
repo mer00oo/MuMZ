@@ -316,7 +316,7 @@ class _HomeContentState extends State<HomeContent> {
 
                 // ===== كارت قصص =====
                 _featureCard(
-                  title: '  هالووووووووووو.  قصص بصوتك',
+                  title: ' قصص بصوتك',
                   subtitle: 'احكي قصة يومية ودع طفلك يلعب بصوتك',
                   image: 'assets/images/image (2).png',
                   accentColor: const Color(0xFF7B3FA0),
