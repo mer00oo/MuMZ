@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mamyapp/features/chatbot/presentation/pages/chatBot.dart';
 import 'package:mamyapp/features/cry_prediction/presentation/pages/cry_page.dart';
 import 'package:mamyapp/features/story_telling/presentation/pages/choose_story.dart';
@@ -32,7 +33,7 @@ class _HomeContentState extends State<HomeContent> {
   void initState() {
     super.initState();
     pages = const [
-      SizedBox(), // ✅ بدل _homePage
+      SizedBox(),
       NotificationsScreen(),
       SettingsScreen(),
       AllMilestonesPage(),
@@ -44,12 +45,10 @@ class _HomeContentState extends State<HomeContent> {
       DateTime birthDate = DateTime.parse(birthDateString);
       DateTime today = DateTime.now();
       int age = today.year - birthDate.year;
-
       if (today.month < birthDate.month ||
           (today.month == birthDate.month && today.day < birthDate.day)) {
         age--;
       }
-
       return '$age سنة';
     } catch (e) {
       return '';
@@ -58,23 +57,22 @@ class _HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
+    // ✅ خلي status bar شفاف عشان الـ gradient يوصل للأعلى
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+    ));
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F7F4),
       extendBodyBehindAppBar: true,
-
-      body: SafeArea(
-        top: false,
-        child: IndexedStack(
-          index: currentIndex,
-          children: [
-            _homePage(),
-            ...pages.sublist(1),
-          ],
-        ),
+      backgroundColor: const Color(0xFFF5F0F8),
+      body: IndexedStack(
+        index: currentIndex,
+        children: [
+          _homePage(),
+          ...pages.sublist(1),
+        ],
       ),
-
-
-      // ===== Bottom Bar Animated =====
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(vertical: 6),
         decoration: BoxDecoration(
@@ -100,16 +98,10 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 
-  // ===== NAV ITEM WITH ANIMATION =====
   Widget _navItem(IconData icon, String label, int index) {
     bool isSelected = currentIndex == index;
-
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          currentIndex = index;
-        });
-      },
+      onTap: () => setState(() => currentIndex = index),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
         padding: EdgeInsets.symmetric(
@@ -118,27 +110,23 @@ class _HomeContentState extends State<HomeContent> {
         ),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFFB8C1EC).withOpacity(0.3)
+              ? const Color(0xFFE8915A).withOpacity(0.15)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
           children: [
-            Icon(
-              icon,
-              color: isSelected
-                  ? const Color(0xFF6D5D6E)
-                  : Colors.grey,
-            ),
+            Icon(icon,
+                color:
+                isSelected ? const Color(0xFFE8915A) : Colors.grey),
             if (isSelected) ...[
               const SizedBox(width: 6),
-              Text(
-                label,
-                style: const TextStyle(
-                  color: Color(0xFF6D5D6E),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              Text(label,
+                  style: const TextStyle(
+                    color: Color(0xFFE8915A),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                  )),
             ]
           ],
         ),
@@ -146,213 +134,333 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 
-  // ================= HOME PAGE =================
   Widget _homePage() {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
-          // ===== HEADER =====
+          // ===== HERO HEADER - gradient برتقالي زي الصورة =====
           Container(
             width: double.infinity,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color(0xFFFFF1E6),
-                  Color(0xFFFFE0D2),
-                  Color(0xFFFFD6C2),
+                  Color(0xFFFF6B35),
+                  Color(0xFFFF8C5A),
+                  Color(0xFFFFAF7B),
+                  Color(0xFFFFCFA0),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
             ),
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                20,
-                20,
-                20,
-                28,
-              ),
-              child: Column(
-                children: [
-                  const Text(
-                    'أهلاً 👋',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+            child: Stack(
+              children: [
+                // ✅ دوائر ديكورية في الخلفية زي الصورة
+                Positioned(
+                  top: -40,
+                  left: -40,
+                  child: Container(
+                    width: 180,
+                    height: 180,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withOpacity(0.08),
                     ),
                   ),
+                ),
+                Positioned(
+                  top: 20,
+                  left: 60,
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withOpacity(0.06),
+                    ),
+                  ),
+                ),
 
-                  const SizedBox(height: 20),
-
-                  Row(
+                Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    20,
+                    MediaQuery.of(context).padding.top + 16,
+                    20,
+                    0,
+                  ),
+                  child: Column(
                     children: [
-                      Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 10,
-                              offset: const Offset(0, 6),
+                      // ===== اسم المستخدم + بيانات =====
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          // ✅ صورة الطفل كبيرة بتبرز من تحت زي الصورة
+                          SizedBox(
+                            width: 140,
+                            height: 160,
+                            child: Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                Image.asset(
+                                  'assets/images/image (2).png',
+                                  fit: BoxFit.contain,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(25),
-                          child: Image.asset(
-                            'assets/images/image (2).png',
-                            fit: BoxFit.cover,
                           ),
-                        ),
-                      ),
 
-                      const SizedBox(width: 16),
+                          const SizedBox(width: 12),
 
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.userName,
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                  color: Color(0xFF6D5D6E),
+                          // بيانات المستخدم
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    widget.userName,
+                                    style: const TextStyle(
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'العمر: ${_calculateAge(widget.childBirth)}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color:
+                                      Colors.white.withOpacity(0.85),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    widget.childName,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color:
+                                      Colors.white.withOpacity(0.7),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+
+                                  // ✅ زر Profile زي الصورة
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 7),
+                                    decoration: BoxDecoration(
+                                      color:
+                                      Colors.white.withOpacity(0.2),
+                                      borderRadius:
+                                      BorderRadius.circular(20),
+                                      border: Border.all(
+                                        color: Colors.white
+                                            .withOpacity(0.4),
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: const Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'الملف الشخصي',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        SizedBox(width: 6),
+                                        Icon(
+                                          Icons.sync_alt_rounded,
+                                          color: Colors.white,
+                                          size: 14,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            const SizedBox(height: 6),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // ===== WHITE ROUNDED SECTION - زي الصورة =====
+          Container(
+            decoration: const BoxDecoration(
+              color: Color(0xFFF5F0F8),
+            ),
+            child: Column(
+              children: [
+                const SizedBox(height: 20),
+
+                // ===== كارت المساعد الذكي =====
+                _featureCard(
+                  title: 'المساعد الذكي',
+                  subtitle: 'اسأل عن أمور الرضاعة والتطعيمات',
+                  image: 'assets/images/11 (2).png',
+                  accentColor: const Color(0xFF7B3FA0),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const AiAssistantScreen()),
+                  ),
+                ),
+
+                const SizedBox(height: 14),
+
+                // ===== كارت قصص =====
+                _featureCard(
+                  title: 'قصص بصوتك',
+                  subtitle: 'احكي قصة يومية ودع طفلك يلعب بصوتك',
+                  image: 'assets/images/12 (2).png',
+                  accentColor: const Color(0xFF7B3FA0),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const ChooseStory()),
+                  ),
+                ),
+
+                const SizedBox(height: 14),
+
+                // ===== كارت تحليل البكاء =====
+                _featureCard(
+                  title: 'تحليل البكاء',
+                  subtitle: 'سجلي صوت طفلك لتحليل سبب بكائه',
+                  image: 'assets/images/13 (1).png',
+                  accentColor: const Color(0xFF7B3FA0),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const CryPage()),
+                  ),
+                ),
+
+                const SizedBox(height: 30),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ===== FEATURE CARD - زي الصورة بالظبط =====
+  Widget _featureCard({
+    required String title,
+    required String subtitle,
+    required String image,
+    required Color accentColor,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 14,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              // ✅ عنوان ف الأعلى بلون أكسنت زي الصورة
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      title,
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: accentColor,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      subtitle,
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade500,
+                        height: 1.5,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+
+                    // ✅ زر Record/انطلق زي الصورة
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: accentColor),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
                             Text(
-                              'العمر: ${_calculateAge(widget.childBirth)}',
-                              style: const TextStyle(
+                              'انطلق',
+                              style: TextStyle(
+                                color: accentColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 13,
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            Container(
+                              width: 22,
+                              height: 22,
+                              decoration: BoxDecoration(
+                                color: accentColor,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 12,
                                 color: Colors.white,
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ),
 
-          const SizedBox(height: 20),
+              const SizedBox(width: 16),
 
-          // ===== GRID =====
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              children: [
-                _gridCard(
-                  title: '   المساعد الذكي',
-                  subtitle: 'اسأل عن امور الرضاعة و التطعيمات',
-                  image: 'assets/images/11 (2).png',
-                  colors: const [Color(0xFFFFF7ED), Color(0xFFFFE4C7)],
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AiAssistantScreen(),
-                      ),
-                    );
-                  },
-                ),
-                _gridCard(
-                  title: 'قصص بصوتك',
-                  subtitle: 'احكي قصة يومية ودع طفلك يلعب بصوتك',
-                  image: 'assets/images/12 (2).png',
-                  colors: const [Color(0xFFFFF0F5), Color(0xFFFFD6E0)],
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ChooseStory(),
-                      ),
-                    );
-                  },
-                ),
-                _gridCard(
-                  title: 'تحليل البكاء',
-                  subtitle: 'سجلي صوت طفلك لتحليل سبب بكائه ',
-                  image: 'assets/images/13 (1).png',
-                  colors: const [Color(0xFFF3F0FF), Color(0xFFE0D7FF)],
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CryPage(),
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 30),
-        ],
-      ),
-    );
-  }
-
-  // ===== GRID CARD =====
-  Widget _gridCard({
-    required String title,
-    required String subtitle,
-    required String image,
-    required List<Color> colors,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: colors,
-          ),
-          borderRadius: BorderRadius.circular(22),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // 🔥 صورة كبيرة
-              Expanded(
+              // ✅ الصورة على اليمين
+              SizedBox(
+                width: 90,
+                height: 90,
                 child: Image.asset(
                   image,
                   fit: BoxFit.contain,
                 ),
-              ),
-
-              Column(
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                ],
               ),
             ],
           ),
