@@ -1,8 +1,7 @@
-// ===== MenuCard =====
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class MenuCard extends StatefulWidget {
-  final Gradient gradient;
   final String imageAsset;
   final String title;
   final String subtitle;
@@ -10,7 +9,6 @@ class MenuCard extends StatefulWidget {
 
   const MenuCard({
     super.key,
-    required this.gradient,
     required this.imageAsset,
     required this.title,
     required this.subtitle,
@@ -27,79 +25,133 @@ class _MenuCardState extends State<MenuCard> {
   @override
   Widget build(BuildContext context) {
     return AnimatedScale(
-      scale: isPressed ? 0.97 : 1.0,
+      scale: isPressed ? 0.96 : 1,
       duration: const Duration(milliseconds: 120),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(20),
+      child: GestureDetector(
         onTap: widget.onTap,
-
-        onTapDown: (_) {
-          setState(() => isPressed = true);
-        },
-
-        onTapCancel: () {
-          setState(() => isPressed = false);
-        },
-
-        onTapUp: (_) {
-          setState(() => isPressed = false);
-        },
+        onTapDown: (_) => setState(() => isPressed = true),
+        onTapUp: (_) => setState(() => isPressed = false),
+        onTapCancel: () => setState(() => isPressed = false),
 
         child: Container(
-          decoration: BoxDecoration(
-            gradient: widget.gradient,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(isPressed ? 0.25 : 0.08),
-                blurRadius: isPressed ? 12 : 8,
-                offset: Offset(0, isPressed ? 6 : 4),
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(18),
-          child: Row(
-            textDirection: TextDirection.rtl,
-            children: [
-              Container(
-                width: 55,
-                height: 55,
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(24),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+              child: Container(
+                padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage(widget.imageAsset),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 15),
+                  color: Colors.white.withOpacity(0.65), // ✨ شفافية
+                  borderRadius: BorderRadius.circular(24),
 
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  // ✨ Border خفيف
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.4),
+                  ),
+
+                  // ✨ Shadow ناعم جدًا
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
+                ),
+
+                child: Row(
+                  textDirection: TextDirection.rtl,
                   children: [
-                    Text(
-                      widget.title,
-                      textAlign: TextAlign.right,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF333333),
+                    // ===== الصورة =====
+                    Container(
+                      width: 70,
+                      height: 70,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.5),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Image.asset(widget.imageAsset),
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      widget.subtitle,
-                      textAlign: TextAlign.right,
-                      style: const TextStyle(
-                        fontSize: 11,
-                        color: Color(0xFF666666),
+
+                    const SizedBox(width: 14),
+
+                    // ===== النص =====
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            widget.title,
+                            textAlign: TextAlign.right,
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF6A1B9A),
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            widget.subtitle,
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey.shade600,
+                              height: 1.5,
+                            ),
+                          ),
+                          const SizedBox(height: 14),
+
+                          // ===== الزر =====
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                border: Border.all(
+                                  color: const Color(0xFF6A1B9A),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Text(
+                                    'انطلق',
+                                    style: TextStyle(
+                                      color: Color(0xFF6A1B9A),
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  Container(
+                                    width: 24,
+                                    height: 24,
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xFF6A1B9A),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: const Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      size: 12,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),
