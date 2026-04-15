@@ -57,7 +57,6 @@ class _HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
-    // ✅ خلي status bar شفاف عشان الـ gradient يوصل للأعلى
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light,
@@ -139,7 +138,7 @@ class _HomeContentState extends State<HomeContent> {
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
-          // ===== HERO HEADER - gradient برتقالي زي الصورة =====
+          // ===== HERO HEADER  =====
           Container(
             width: double.infinity,
             decoration: const BoxDecoration(
@@ -156,7 +155,6 @@ class _HomeContentState extends State<HomeContent> {
             ),
             child: Stack(
               children: [
-                // ✅ دوائر ديكورية في الخلفية زي الصورة
                 Positioned(
                   top: -40,
                   left: -40,
@@ -191,11 +189,9 @@ class _HomeContentState extends State<HomeContent> {
                   ),
                   child: Column(
                     children: [
-                      // ===== اسم المستخدم + بيانات =====
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          // ✅ صورة الطفل كبيرة بتبرز من تحت زي الصورة
                           SizedBox(
                             width: 140,
                             height: 160,
@@ -248,7 +244,6 @@ class _HomeContentState extends State<HomeContent> {
                                   ),
                                   const SizedBox(height: 12),
 
-                                  // ✅ زر Profile زي الصورة
                                   Container(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 16, vertical: 7),
@@ -296,7 +291,7 @@ class _HomeContentState extends State<HomeContent> {
             ),
           ),
 
-          // ===== WHITE ROUNDED SECTION - زي الصورة =====
+          // ===== WHITE ROUNDED SECTION  =====
           Container(
             decoration: const BoxDecoration(
               color: Color(0xFFF5F0F8),
@@ -355,7 +350,7 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 
-  // ===== FEATURE CARD - زي الصورة بالظبط =====
+  // ===== FEATURE CARD  =====
   Widget _featureCard({
     required String title,
     required String subtitle,
@@ -382,7 +377,6 @@ class _HomeContentState extends State<HomeContent> {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              // ✅ عنوان ف الأعلى بلون أكسنت زي الصورة
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -408,7 +402,6 @@ class _HomeContentState extends State<HomeContent> {
                     ),
                     const SizedBox(height: 12),
 
-                    // ✅ زر Record/انطلق زي الصورة
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
@@ -453,7 +446,6 @@ class _HomeContentState extends State<HomeContent> {
 
               const SizedBox(width: 16),
 
-              // ✅ الصورة على اليمين
               SizedBox(
                 width: 90,
                 height: 90,
