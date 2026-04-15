@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mamyapp/features/chatbot/presentation/pages/chatBot.dart';
 import 'package:mamyapp/features/cry_prediction/presentation/pages/cry_page.dart';
 import 'package:mamyapp/features/story_telling/presentation/pages/choose_story.dart';
@@ -66,20 +67,14 @@ class _HomeContentState extends State<HomeContent> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-
-      body: SafeArea(
-        top: false,
-        child: IndexedStack(
-          index: currentIndex,
-          children: [
-            _homePage(),
-            ...pages.sublist(1),
-          ],
-        ),
+      backgroundColor: const Color(0xFFF5F0F8),
+      body: IndexedStack(
+        index: currentIndex,
+        children: [
+          _homePage(),
+          ...pages.sublist(1),
+        ],
       ),
-
-
-      // ===== Bottom Bar Animated =====
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(vertical: 6),
         decoration: BoxDecoration(
@@ -117,27 +112,23 @@ class _HomeContentState extends State<HomeContent> {
         ),
         decoration: BoxDecoration(
           color: isSelected
-              ? const Color(0xFFB8C1EC).withOpacity(0.3)
+              ? const Color(0xFFE8915A).withOpacity(0.15)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
           children: [
-            Icon(
-              icon,
-              color: isSelected
-                  ? const Color(0xFF6D5D6E)
-                  : Colors.grey,
-            ),
+            Icon(icon,
+                color:
+                isSelected ? const Color(0xFFE8915A) : Colors.grey),
             if (isSelected) ...[
               const SizedBox(width: 6),
-              Text(
-                label,
-                style: const TextStyle(
-                  color: Color(0xFF6D5D6E),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              Text(label,
+                  style: const TextStyle(
+                    color: Color(0xFFE8915A),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                  )),
             ]
           ],
         ),
@@ -150,100 +141,165 @@ class _HomeContentState extends State<HomeContent> {
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
-          // ===== HEADER =====
-          Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFFFFF1E6),
-                  Color(0xFFFFE0D2),
-                  Color(0xFFFFD6C2),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+          // ===== HERO HEADER - gradient برتقالي زي الصورة =====
+          Directionality(
+            textDirection: TextDirection.rtl,
+            child: Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFFFF6B35),
+                    Color(0xFFFF8C5A),
+                    Color(0xFFFFAF7B),
+                    Color(0xFFFFCFA0),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
               ),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                20,
-                20,
-                20,
-                28,
-              ),
-              child: Column(
+              child: Stack(
                 children: [
-                  const Text(
-                    'أهلاً 👋',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  // ✅ دوائر ديكورية في الخلفية زي الصورة
+                  Positioned(
+                    top: -40,
+                    left: -40,
+                    child: Container(
+                      width: 180,
+                      height: 180,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withOpacity(0.08),
+                      ),
                     ),
                   ),
-
-                  const SizedBox(height: 20),
-
-                  Row(
-                    children: [
-                      Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 10,
-                              offset: const Offset(0, 6),
-                            ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(25),
-                          child: Image.asset(
-                            'assets/images/image (2).png',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                  Positioned(
+                    top: 20,
+                    left: 60,
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withOpacity(0.06),
                       ),
-
-                      const SizedBox(width: 16),
-
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                  ),
+            
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      20,
+                      MediaQuery.of(context).padding.top + 16,
+                      20,
+                      0,
+                    ),
+                    child: Column(
+                      children: [
+                        // ===== اسم المستخدم + بيانات =====
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              widget.userName,
-                              style: const TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                  color: Color(0xFF6D5D6E),
+                            // ✅ صورة الطفل كبيرة بتبرز من تحت زي الصورة
+                            SizedBox(
+                              width: 140,
+                              height: 160,
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  Image.asset(
+                                    'assets/images/image (2).png',
+                                    fit: BoxFit.contain,
+                                  ),
+                                ],
                               ),
                             ),
-                            const SizedBox(height: 6),
-                            Text(
-                              'العمر: ${_calculateAge(widget.childBirth)}',
-                              style: const TextStyle(
-                                color: Colors.white,
+            
+                            const SizedBox(width: 12),
+            
+                            // بيانات المستخدم
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.userName,
+                                      style: const TextStyle(
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'العمر: ${_calculateAge(widget.childBirth)}',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color:
+                                        Colors.white.withOpacity(0.85),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      widget.childName,
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color:
+                                        Colors.white.withOpacity(0.7),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+            
+                                    // ✅ زر Profile زي الصورة
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 7),
+                                      decoration: BoxDecoration(
+                                        color:
+                                        Colors.white.withOpacity(0.2),
+                                        borderRadius:
+                                        BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: Colors.white
+                                              .withOpacity(0.4),
+                                          width: 1,
+                                        ),
+                                      ),
+                                      child: const Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            'الملف الشخصي',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          SizedBox(width: 6),
+                                          Icon(
+                                            Icons.sync_alt_rounded,
+                                            color: Colors.white,
+                                            size: 14,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-
-          const SizedBox(height: 20),
 
           // ===== WHITE ROUNDED SECTION - زي الصورة =====
           Container(
@@ -259,7 +315,7 @@ class _HomeContentState extends State<HomeContent> {
                   title: 'المساعد الذكي',
                   subtitle: 'اسأل عن أمور الرضاعة والتطعيمات',
                   image: 'assets/images/11 (2).png',
-                  accentColor: const Color(0xFF7B3FA0),
+                  accentColor: const Color.fromARGB(255, 53, 53, 53),
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -274,7 +330,7 @@ class _HomeContentState extends State<HomeContent> {
                   title: 'قصص بصوتك',
                   subtitle: 'احكي قصة يومية ودع طفلك يلعب بصوتك',
                   image: 'assets/images/12 (2).png',
-                  accentColor: const Color(0xFF7B3FA0),
+                  accentColor: const Color.fromARGB(255, 53, 53, 53),
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const ChooseStory()),
@@ -288,15 +344,11 @@ class _HomeContentState extends State<HomeContent> {
                   title: 'تحليل البكاء',
                   subtitle: 'سجلي صوت طفلك لتحليل سبب بكائه',
                   image: 'assets/images/13 (1).png',
-                  colors: const [Color(0xFFF3F0FF), Color(0xFFE0D7FF)],
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CryPage(),
-                      ),
-                    );
-                  },
+                  accentColor: const Color.fromARGB(255, 53, 53, 53),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const CryPage()),
+                  ),
                 ),
 
                 const SizedBox(height: 30),
@@ -321,36 +373,99 @@ class _HomeContentState extends State<HomeContent> {
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: colors,
-          ),
-          borderRadius: BorderRadius.circular(22),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 14,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              // 🔥 صورة كبيرة
+              // ✅ عنوان ف الأعلى بلون أكسنت زي الصورة
               Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      title,
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: accentColor,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      subtitle,
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade500,
+                        height: 1.5,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+
+                    // ✅ زر Record/انطلق زي الصورة
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Color(0xFFFF8C5A)),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'انطلق',
+                              style: TextStyle(
+                                color: Color(0xFFFF8C5A),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 13,
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            Container(
+                              width: 22,
+                              height: 22,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFFF8C5A),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 12,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(width: 16),
+
+              // ✅ الصورة على اليمين
+              SizedBox(
+                width: 90,
+                height: 90,
                 child: Image.asset(
                   image,
                   fit: BoxFit.contain,
                 ),
-              ),
-
-              Column(
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                ],
               ),
             ],
           ),
