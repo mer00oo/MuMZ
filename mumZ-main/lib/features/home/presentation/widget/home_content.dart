@@ -57,7 +57,6 @@ class _HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
-    // ✅ خلي status bar شفاف عشان الـ gradient يوصل للأعلى
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light,
@@ -139,16 +138,15 @@ class _HomeContentState extends State<HomeContent> {
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
-          // ===== HERO HEADER - gradient برتقالي زي الصورة =====
+          // ===== HERO HEADER  =====
           Container(
             width: double.infinity,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color(0xFFFF6B35),
-                  Color(0xFFFF8C5A),
-                  Color(0xFFFFAF7B),
-                  Color(0xFFFFCFA0),
+                  Color(0xFF7B3FA0),
+                  Color(0xFFeee0fb),
+
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -156,7 +154,6 @@ class _HomeContentState extends State<HomeContent> {
             ),
             child: Stack(
               children: [
-                // ✅ دوائر ديكورية في الخلفية زي الصورة
                 Positioned(
                   top: -40,
                   left: -40,
@@ -191,11 +188,9 @@ class _HomeContentState extends State<HomeContent> {
                   ),
                   child: Column(
                     children: [
-                      // ===== اسم المستخدم + بيانات =====
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          // ✅ صورة الطفل كبيرة بتبرز من تحت زي الصورة
                           SizedBox(
                             width: 140,
                             height: 160,
@@ -203,7 +198,7 @@ class _HomeContentState extends State<HomeContent> {
                               alignment: Alignment.bottomCenter,
                               children: [
                                 Image.asset(
-                                  'assets/images/image (2).png',
+                                  'assets/images/qqq.png',
                                   fit: BoxFit.contain,
                                 ),
                               ],
@@ -248,7 +243,6 @@ class _HomeContentState extends State<HomeContent> {
                                   ),
                                   const SizedBox(height: 12),
 
-                                  // ✅ زر Profile زي الصورة
                                   Container(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 16, vertical: 7),
@@ -296,7 +290,7 @@ class _HomeContentState extends State<HomeContent> {
             ),
           ),
 
-          // ===== WHITE ROUNDED SECTION - زي الصورة =====
+          // ===== WHITE ROUNDED SECTION  =====
           Container(
             decoration: const BoxDecoration(
               color: Color(0xFFF5F0F8),
@@ -309,7 +303,7 @@ class _HomeContentState extends State<HomeContent> {
                 _featureCard(
                   title: 'المساعد الذكي',
                   subtitle: 'اسأل عن أمور الرضاعة والتطعيمات',
-                  image: 'assets/images/11 (2).png',
+                  image: 'assets/images/image 1 (2).png',
                   accentColor: const Color(0xFF7B3FA0),
                   onTap: () => Navigator.push(
                     context,
@@ -324,7 +318,7 @@ class _HomeContentState extends State<HomeContent> {
                 _featureCard(
                   title: 'قصص بصوتك',
                   subtitle: 'احكي قصة يومية ودع طفلك يلعب بصوتك',
-                  image: 'assets/images/12 (2).png',
+                  image: 'assets/images/image (2).png',
                   accentColor: const Color(0xFF7B3FA0),
                   onTap: () => Navigator.push(
                     context,
@@ -338,7 +332,7 @@ class _HomeContentState extends State<HomeContent> {
                 _featureCard(
                   title: 'تحليل البكاء',
                   subtitle: 'سجلي صوت طفلك لتحليل سبب بكائه',
-                  image: 'assets/images/13 (1).png',
+                  image: 'assets/images/3 (2).png',
                   accentColor: const Color(0xFF7B3FA0),
                   onTap: () => Navigator.push(
                     context,
@@ -355,7 +349,7 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 
-  // ===== FEATURE CARD - زي الصورة بالظبط =====
+  // ===== FEATURE CARD  =====
   Widget _featureCard({
     required String title,
     required String subtitle,
@@ -382,7 +376,6 @@ class _HomeContentState extends State<HomeContent> {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              // ✅ عنوان ف الأعلى بلون أكسنت زي الصورة
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -408,7 +401,6 @@ class _HomeContentState extends State<HomeContent> {
                     ),
                     const SizedBox(height: 12),
 
-                    // ✅ زر Record/انطلق زي الصورة
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
@@ -453,7 +445,6 @@ class _HomeContentState extends State<HomeContent> {
 
               const SizedBox(width: 16),
 
-              // ✅ الصورة على اليمين
               SizedBox(
                 width: 90,
                 height: 90,
