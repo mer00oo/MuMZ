@@ -141,154 +141,157 @@ class _HomeContentState extends State<HomeContent> {
       child: Column(
         children: [
           // ===== HERO HEADER  =====
-          Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color(0xFF7B3FA0),
-                  Color(0xFFeee0fb),
-
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+          Directionality(
+            textDirection: TextDirection.rtl,
+            child: Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFF7B3FA0),
+                    Color(0xFFeee0fb),
+            
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
               ),
-            ),
-            child: Stack(
-              children: [
-                Positioned(
-                  top: -40,
-                  left: -40,
-                  child: Container(
-                    width: 180,
-                    height: 180,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white.withOpacity(0.08),
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: -40,
+                    left: -40,
+                    child: Container(
+                      width: 180,
+                      height: 180,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withOpacity(0.08),
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 20,
-                  left: 60,
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white.withOpacity(0.06),
+                  Positioned(
+                    top: 20,
+                    left: 60,
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withOpacity(0.06),
+                      ),
                     ),
                   ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    20,
-                    MediaQuery.of(context).padding.top + 16,
-                    20,
-                    0,
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          SizedBox(
-                            width: 140,
-                            height: 160,
-                            child: Stack(
-                              alignment: Alignment.bottomCenter,
-                              children: [
-                                Image.asset(
-                                  'assets/images/qqq.png',
-                                  fit: BoxFit.contain,
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          const SizedBox(width: 12),
-
-                          // بيانات المستخدم
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
+            
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                      20,
+                      MediaQuery.of(context).padding.top + 16,
+                      20,
+                      0,
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              width: 140,
+                              height: 160,
+                              child: Stack(
+                                alignment: Alignment.bottomCenter,
                                 children: [
-                                  Text(
-                                    widget.userName,
-                                    style: const TextStyle(
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    'العمر: ${_calculateAge(widget.childBirth)}',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color:
-                                      Colors.white.withOpacity(0.85),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    widget.childName,
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color:
-                                      Colors.white.withOpacity(0.7),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 12),
-
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 7),
-                                    decoration: BoxDecoration(
-                                      color:
-                                      Colors.white.withOpacity(0.2),
-                                      borderRadius:
-                                      BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: Colors.white
-                                            .withOpacity(0.4),
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: const Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          'الملف الشخصي',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        SizedBox(width: 6),
-                                        Icon(
-                                          Icons.sync_alt_rounded,
-                                          color: Colors.white,
-                                          size: 14,
-                                        ),
-                                      ],
-                                    ),
+                                  Image.asset(
+                                    'assets/images/qqq.png',
+                                    fit: BoxFit.contain,
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+            
+                            const SizedBox(width: 12),
+            
+                            // بيانات المستخدم
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.userName,
+                                      style: const TextStyle(
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'العمر: ${_calculateAge(widget.childBirth)}',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color:
+                                        Colors.white.withOpacity(0.85),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      widget.childName,
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color:
+                                        Colors.white.withOpacity(0.7),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+            
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 7),
+                                      decoration: BoxDecoration(
+                                        color:
+                                        Colors.white.withOpacity(0.2),
+                                        borderRadius:
+                                        BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: Colors.white
+                                              .withOpacity(0.4),
+                                          width: 1,
+                                        ),
+                                      ),
+                                      child: const Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            'الملف الشخصي',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          SizedBox(width: 6),
+                                          Icon(
+                                            Icons.sync_alt_rounded,
+                                            color: Colors.white,
+                                            size: 14,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
 
