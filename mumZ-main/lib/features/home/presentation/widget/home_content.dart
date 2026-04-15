@@ -59,7 +59,6 @@ class _HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
-    // ✅ خلي status bar شفاف عشان الـ gradient يوصل للأعلى
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light,
@@ -141,167 +140,159 @@ class _HomeContentState extends State<HomeContent> {
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
-          // ===== HERO HEADER - gradient برتقالي زي الصورة =====
-          Directionality(
-            textDirection: TextDirection.rtl,
-            child: Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFFFF6B35),
-                    Color(0xFFFF8C5A),
-                    Color(0xFFFFAF7B),
-                    Color(0xFFFFCFA0),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+          // ===== HERO HEADER  =====
+          Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF7B3FA0),
+                  Color(0xFFeee0fb),
+
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-              child: Stack(
-                children: [
-                  // ✅ دوائر ديكورية في الخلفية زي الصورة
-                  Positioned(
-                    top: -40,
-                    left: -40,
-                    child: Container(
-                      width: 180,
-                      height: 180,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white.withOpacity(0.08),
-                      ),
+            ),
+            child: Stack(
+              children: [
+                Positioned(
+                  top: -40,
+                  left: -40,
+                  child: Container(
+                    width: 180,
+                    height: 180,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withOpacity(0.08),
                     ),
                   ),
-                  Positioned(
-                    top: 20,
-                    left: 60,
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white.withOpacity(0.06),
-                      ),
+                ),
+                Positioned(
+                  top: 20,
+                  left: 60,
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withOpacity(0.06),
                     ),
                   ),
-            
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(
-                      20,
-                      MediaQuery.of(context).padding.top + 16,
-                      20,
-                      0,
-                    ),
-                    child: Column(
-                      children: [
-                        // ===== اسم المستخدم + بيانات =====
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            // ✅ صورة الطفل كبيرة بتبرز من تحت زي الصورة
-                            SizedBox(
-                              width: 140,
-                              height: 160,
-                              child: Stack(
-                                alignment: Alignment.bottomCenter,
+                ),
+
+                Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    20,
+                    MediaQuery.of(context).padding.top + 16,
+                    20,
+                    0,
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            width: 140,
+                            height: 160,
+                            child: Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                Image.asset(
+                                  'assets/images/qqq.png',
+                                  fit: BoxFit.contain,
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(width: 12),
+
+                          // بيانات المستخدم
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
                                 children: [
-                                  Image.asset(
-                                    'assets/images/image (2).png',
-                                    fit: BoxFit.contain,
+                                  Text(
+                                    widget.userName,
+                                    style: const TextStyle(
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'العمر: ${_calculateAge(widget.childBirth)}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color:
+                                      Colors.white.withOpacity(0.85),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    widget.childName,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color:
+                                      Colors.white.withOpacity(0.7),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 7),
+                                    decoration: BoxDecoration(
+                                      color:
+                                      Colors.white.withOpacity(0.2),
+                                      borderRadius:
+                                      BorderRadius.circular(20),
+                                      border: Border.all(
+                                        color: Colors.white
+                                            .withOpacity(0.4),
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: const Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'الملف الشخصي',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        SizedBox(width: 6),
+                                        Icon(
+                                          Icons.sync_alt_rounded,
+                                          color: Colors.white,
+                                          size: 14,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-            
-                            const SizedBox(width: 12),
-            
-                            // بيانات المستخدم
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      widget.userName,
-                                      style: const TextStyle(
-                                        fontSize: 28,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'العمر: ${_calculateAge(widget.childBirth)}',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color:
-                                        Colors.white.withOpacity(0.85),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 2),
-                                    Text(
-                                      widget.childName,
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        color:
-                                        Colors.white.withOpacity(0.7),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 12),
-            
-                                    // ✅ زر Profile زي الصورة
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16, vertical: 7),
-                                      decoration: BoxDecoration(
-                                        color:
-                                        Colors.white.withOpacity(0.2),
-                                        borderRadius:
-                                        BorderRadius.circular(20),
-                                        border: Border.all(
-                                          color: Colors.white
-                                              .withOpacity(0.4),
-                                          width: 1,
-                                        ),
-                                      ),
-                                      child: const Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            'الملف الشخصي',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          SizedBox(width: 6),
-                                          Icon(
-                                            Icons.sync_alt_rounded,
-                                            color: Colors.white,
-                                            size: 14,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
 
-          // ===== WHITE ROUNDED SECTION - زي الصورة =====
+          // ===== WHITE ROUNDED SECTION  =====
           Container(
             decoration: const BoxDecoration(
               color: Color(0xFFF5F0F8),
@@ -315,7 +306,7 @@ class _HomeContentState extends State<HomeContent> {
                   title: 'المساعد الذكي',
                   subtitle: 'اسأل عن أمور الرضاعة والتطعيمات',
                   image: 'assets/images/11 (2).png',
-                  accentColor: const Color.fromARGB(255, 53, 53, 53),
+                  accentColor: const Color(0xFF7B3FA0),
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -330,7 +321,7 @@ class _HomeContentState extends State<HomeContent> {
                   title: 'قصص بصوتك',
                   subtitle: 'احكي قصة يومية ودع طفلك يلعب بصوتك',
                   image: 'assets/images/12 (2).png',
-                  accentColor: const Color.fromARGB(255, 53, 53, 53),
+                  accentColor: const Color(0xFF7B3FA0),
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const ChooseStory()),
@@ -344,7 +335,7 @@ class _HomeContentState extends State<HomeContent> {
                   title: 'تحليل البكاء',
                   subtitle: 'سجلي صوت طفلك لتحليل سبب بكائه',
                   image: 'assets/images/13 (1).png',
-                  accentColor: const Color.fromARGB(255, 53, 53, 53),
+                  accentColor: const Color(0xFF7B3FA0),
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const CryPage()),
@@ -360,7 +351,7 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 
-  // ===== FEATURE CARD - زي الصورة بالظبط =====
+  // ===== FEATURE CARD  =====
   Widget _featureCard({
     required String title,
     required String subtitle,
@@ -387,7 +378,6 @@ class _HomeContentState extends State<HomeContent> {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              // ✅ عنوان ف الأعلى بلون أكسنت زي الصورة
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -413,7 +403,6 @@ class _HomeContentState extends State<HomeContent> {
                     ),
                     const SizedBox(height: 12),
 
-                    // ✅ زر Record/انطلق زي الصورة
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
@@ -458,7 +447,6 @@ class _HomeContentState extends State<HomeContent> {
 
               const SizedBox(width: 16),
 
-              // ✅ الصورة على اليمين
               SizedBox(
                 width: 90,
                 height: 90,
