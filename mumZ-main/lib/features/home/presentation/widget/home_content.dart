@@ -308,7 +308,7 @@ class _HomeContentState extends State<HomeContent> {
                 _featureCard(
                   title: 'المساعد الذكي',
                   subtitle: 'اسأل عن أمور الرضاعة والتطعيمات',
-                  image: 'assets/images/11 (2).png',
+                  image: 'assets/images/image 1 (2).png',
                   accentColor: const Color(0xFF7B3FA0),
                   onTap: () => Navigator.push(
                     context,
@@ -323,7 +323,7 @@ class _HomeContentState extends State<HomeContent> {
                 _featureCard(
                   title: 'قصص بصوتك',
                   subtitle: 'احكي قصة يومية ودع طفلك يلعب بصوتك',
-                  image: 'assets/images/12 (2).png',
+                  image: 'assets/images/image (2).png',
                   accentColor: const Color(0xFF7B3FA0),
                   onTap: () => Navigator.push(
                     context,
@@ -337,7 +337,7 @@ class _HomeContentState extends State<HomeContent> {
                 _featureCard(
                   title: 'تحليل البكاء',
                   subtitle: 'سجلي صوت طفلك لتحليل سبب بكائه',
-                  image: 'assets/images/13 (1).png',
+                  image: 'assets/images/3 (2).png',
                   accentColor: const Color(0xFF7B3FA0),
                   onTap: () => Navigator.push(
                     context,
