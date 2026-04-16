@@ -23,10 +23,10 @@ class _VoiceCloningScreenState extends State<VoiceCloningScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFDAB9),
+        backgroundColor: const Color(0xFFE8915A),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF5D4E37)),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
@@ -34,16 +34,11 @@ class _VoiceCloningScreenState extends State<VoiceCloningScreen> {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF5D4E37),
+            color: Color(0xFFFFFFFF),
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Color(0xFF5D4E37)),
-            onPressed: () {},
-          ),
-        ],
+
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -76,7 +71,7 @@ class _VoiceCloningScreenState extends State<VoiceCloningScreen> {
                       return const Icon(
                         Icons.headphones,
                         size: 70,
-                        color: Color(0xFFFFB08A),
+                        color: Color(0xFFE8915A),
                       );
                     },
                   ),
@@ -105,7 +100,7 @@ class _VoiceCloningScreenState extends State<VoiceCloningScreen> {
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     colors: [
-                      Color(0xFFFFDAB9),
+                      Color(0xFFE8915A),
                       Color(0xFFFFB08A),
                     ],
                   ),
@@ -181,7 +176,7 @@ class _VoiceCloningScreenState extends State<VoiceCloningScreen> {
                       width: 60,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFB08A),
+                        color: const Color(0xFFE8915A),
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: Colors.white,
@@ -230,7 +225,7 @@ class _VoiceCloningScreenState extends State<VoiceCloningScreen> {
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     colors: [
-                      Color(0xFFFFDAB9),
+                      Color(0xFFE8915A),
                       Color(0xFFFFB08A),
                     ],
                   ),

@@ -17,10 +17,10 @@ class VoiceGuideScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFDAB9),
+        backgroundColor: const Color(0xFFE8915A),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF5D4E37)),
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFFFFFFFF)),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
@@ -28,7 +28,7 @@ class VoiceGuideScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF5D4E37),
+            color: Color(0xFFFFFFFF),
           ),
         ),
         centerTitle: true,
@@ -101,7 +101,7 @@ class VoiceGuideScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     colors: [
-                      Color(0xFFFFDAB9),
+                      Color(0xFFE8915A),
                       Color(0xFFFFB08A),
                     ],
                   ),

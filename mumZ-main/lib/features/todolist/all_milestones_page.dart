@@ -48,7 +48,7 @@ class _AllMilestonesPageState extends State<AllMilestonesPage> {
           flexibleSpace: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFFFFDAB9), Color(0xFFFFCBA4)],
+                colors: [Color(0xFFE8915A), Color(0xFFE8915A)],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -57,12 +57,26 @@ class _AllMilestonesPageState extends State<AllMilestonesPage> {
           elevation: 0,
           centerTitle: true,
           automaticallyImplyLeading: false,
+
+          // ✅ زر الرجوع على اليمين
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Color(0xFFFFFFFF),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+
           title: const Text(
             'كل المراحل',
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF5D4E37), // ✅ نفس لون نص الهوم
+              color: Color(0xFFFFFFFF),
             ),
           ),
         ),

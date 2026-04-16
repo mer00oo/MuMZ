@@ -15,7 +15,7 @@ class StoryScreen extends StatelessWidget {
     final story = GetStoryById(StoryRepositoryImpl()).call(storyId);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFD4BA),
+        backgroundColor: const Color(0xFFE8915A),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -26,12 +26,6 @@ class StoryScreen extends StatelessWidget {
           style: TextStyle(color: Colors.white, fontSize: 18),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Colors.white),
-            onPressed: () {},
-          ),
-        ],
       ),
 
       body: Padding(
@@ -46,7 +40,7 @@ class StoryScreen extends StatelessWidget {
                 
                 decoration: BoxDecoration(
                   color: const Color(0xffFFF8F4),
-                  border: Border.all(color: const Color(0xffFBDECD)),
+                  border: Border.all(color: const Color(0xFFE8915A)),
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(

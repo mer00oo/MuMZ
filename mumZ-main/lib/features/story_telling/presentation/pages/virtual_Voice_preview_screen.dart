@@ -52,10 +52,10 @@ class _VirtualVoicePreviewScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFD4BA),
+        backgroundColor: const Color(0xFFE8915A),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
@@ -63,12 +63,6 @@ class _VirtualVoicePreviewScreenState
           style: TextStyle(color: Colors.white, fontSize: 18),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Colors.white),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: Center(
         child: Column(

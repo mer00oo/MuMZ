@@ -61,7 +61,7 @@ class _RecordCryView extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: const Color(0xFFFFD4BA),
+            backgroundColor: const Color(0xFFE8915A),
             elevation: 0,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -92,10 +92,10 @@ class _RecordCryView extends StatelessWidget {
                   height: 110,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: isRecording ? Colors.red : const Color(0xFFFFB399),
+                    color: isRecording ? Colors.red : const Color(0xFFE8915A),
                     boxShadow: [
                       BoxShadow(
-                        color: (isRecording ? Colors.red : const Color(0xFFFFB399))
+                        color: (isRecording ? Colors.red : const Color(0xFFE8915A))
                             .withOpacity(0.4),
                         blurRadius: 15,
                         spreadRadius: 3,
@@ -119,7 +119,7 @@ class _RecordCryView extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () => _handleSend(context, state),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFFD4BA),
+                      backgroundColor: const Color(0xFFE8915A),
                       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                     ),
@@ -128,7 +128,7 @@ class _RecordCryView extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () => context.read<RecordCryBloc>().add(ResetRecordingEvent()),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFFB399),
+                      backgroundColor: const Color(0xFFE8915A),
                       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                     ),

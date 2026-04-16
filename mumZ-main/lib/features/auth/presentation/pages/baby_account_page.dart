@@ -17,29 +17,23 @@ class _BabyAccountPageState extends State<BabyAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF0E8),
+      backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFD4C4),
+        backgroundColor: const Color(0xFFE8915A),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFFE89B88)),
+          icon: const Icon(Icons.arrow_back_ios_new_outlined, color: Color(0xFFFFFFFF)),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
           'إدارة البيانات',
           style: TextStyle(
-            color: Color(0xFFE89B88),
+            color: Color(0xFFFFFFFF),
             fontSize: 20,
             fontWeight: FontWeight.w600,
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Color(0xFFE89B88)),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -64,17 +58,17 @@ class _BabyAccountPageState extends State<BabyAccountPage> {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: const Color(0xFFff8c00).withOpacity(0.3), // 👈 شادو خفيف
                       blurRadius: 10,
-                      offset: const Offset(0, 5),
+                      offset: const Offset(0, 4),
                     ),
                   ],
                 ),
                 child: Center(
                   child: Image.asset(
-                    'assets/dd.png',
-                    width: 80,
-                    height: 80,
+                    'assets/images/ss.jpg',
+                    width: 150,
+                    height: 150,
                     errorBuilder: (context, error, stackTrace) {
                       return const Icon(
                         Icons.child_care,
@@ -86,26 +80,59 @@ class _BabyAccountPageState extends State<BabyAccountPage> {
                 ),
               ),
               const SizedBox(height: 40),
-              _buildTextField(
-                controller: nameController,
-                label: 'اسم الطفل',
-                icon: Icons.child_care,
+
+              Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFFff8c00).withOpacity(0.3), // 👈 شادو خفيف
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: _buildTextField(
+                  controller: nameController,
+                  label: 'اسم الطفل',
+                  icon: Icons.child_care,
+                ),
               ),
               const SizedBox(height: 20),
-              _buildTextField(
+              Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFFff8c00).withOpacity(0.3), // 👈 شادو خفيف
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: _buildTextField(
                 controller: genderController,
                 label: 'جنس الطفل',
                 icon: Icons.person,
               ),
+              ),
               const SizedBox(height: 20),
-              _buildDateField(),
+          Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFff8c00).withOpacity(0.3), // 👈 شادو خفيف
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+              child: _buildDateField(),),
               const SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
                   // حفظ التعديلات
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFFB4A0),
+                  backgroundColor: const Color(0xFFE8915A),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),

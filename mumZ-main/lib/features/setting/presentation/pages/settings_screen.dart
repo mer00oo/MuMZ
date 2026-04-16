@@ -7,26 +7,22 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFFFFDAB9), Color(0xFFFFCBA4)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
-        ),
+        backgroundColor: const Color(0xFFE8915A),
+        foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: false,
         title: const Text(
-          'الاعدادت',
+          'الإعدادات',
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF5D4E37), // ✅ نفس لون نص الهوم
+            color: Color(0xFF5D4E37),
           ),
         ),
+      ),
+      body: const Center(
+        child: Text("Settings Screen"),
       ),
     );
   }

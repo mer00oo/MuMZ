@@ -13,31 +13,21 @@ class Asked extends StatelessWidget {
         backgroundColor: const Color(0xFFFFF7FC),
 
         appBar: AppBar(
-          backgroundColor: const Color(0xFFFFEDF2),
+          backgroundColor: const Color(0xFFE8915A),
           elevation: 0,
-          centerTitle: true,
-
           leading: IconButton(
-            icon: const Icon(Icons.menu, color: Color(0xFFE89B88)),
-            onPressed: () {},
+            icon: const Icon(Icons.arrow_back_ios_new_outlined, color: Color(0xFFFFFFFF)),
+            onPressed: () => Navigator.pop(context),
           ),
-
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.arrow_forward_ios,
-                  size: 18, color: Color(0xFFE89B88)),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-
           title: const Text(
-            'الأسئلة الشائعة',
+            ' الأسئلة الشائعة',
             style: TextStyle(
-              color: Color(0xFFE89B88),
+              color: Color(0xFFFFFFFF),
               fontSize: 20,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
             ),
           ),
+          centerTitle: true,
         ),
 
         body: SingleChildScrollView(
@@ -170,7 +160,7 @@ class Asked extends StatelessWidget {
                     style: TextStyle(fontSize: 16),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFFB4A0),
+                    backgroundColor: const Color(0xFFE8915A),
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),

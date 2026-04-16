@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: const Color(0xFFFDFBF7),
         ),
 
-        // 🔥 الحل الأساسي للمشكلة
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,

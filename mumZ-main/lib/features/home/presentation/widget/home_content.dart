@@ -71,108 +71,21 @@ class _HomeContentState extends State<HomeContent>
 
     return Scaffold(
       backgroundColor: const Color(0xFFFDF6EE),
-      body: IndexedStack(
-        index: currentIndex,
-        children: [
-          _homePage(),
-          const SettingsScreen(),
-          const AllMilestonesPage(),
-        ],
+
+      // ✅ DRAWER الرئيسي
+      drawer: CustomDrawer(
+        userName: widget.userName,
+        selectedIndex: currentIndex,
+        onItemTap: (index) {
+          setState(() => currentIndex = index);
+          Navigator.pop(context);
+        },
       ),
-      bottomNavigationBar: _buildBottomNav(),
+
+        body: _homePage(),
     );
   }
 
-  Widget _buildBottomNav() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(28),
-          topRight: Radius.circular(28),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFFE8915A).withOpacity(0.15),
-            blurRadius: 24,
-            offset: const Offset(0, -6),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _navItem(Icons.home_rounded, 'الرئيسية', 0),
-              _navItem(Icons.settings_rounded, 'الإعدادات', 1),
-              _navItem(Icons.task_alt_rounded, 'المهام', 2),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _navItem(IconData icon, String label, int index) {
-    final bool isSelected = currentIndex == index;
-    const selectedColor = Color(0xFFE8915A);
-
-    return GestureDetector(
-      onTap: () => setState(() => currentIndex = index),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-        padding: EdgeInsets.symmetric(
-          horizontal: isSelected ? 18 : 12,
-          vertical: 10,
-        ),
-        decoration: BoxDecoration(
-          gradient: isSelected
-              ? const LinearGradient(
-            colors: [Color(0xFFE8915A), Color(0xFFF4B08A)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          )
-              : null,
-          color: isSelected ? null : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: isSelected
-              ? [
-            BoxShadow(
-              color: selectedColor.withOpacity(0.35),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ]
-              : [],
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              size: 22,
-              color: isSelected ? Colors.white : Colors.grey.shade400,
-            ),
-            if (isSelected) ...[
-              const SizedBox(width: 6),
-              Text(
-                label,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                  fontFamily: 'Cairo',
-                ),
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
 
   Widget _homePage() {
     return Column(
@@ -228,6 +141,16 @@ class _HomeContentState extends State<HomeContent>
                       ),
                     ],
                   ),
+                  const SizedBox(height: 16),
+                  _buildLargeFeatureCard(
+                    title: 'المهام',
+                    subtitle: 'تابعي نمو طفلك خطوه بخطوه معنا ',
+                    image: 'assets/images/a.png',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const AllMilestonesPage()),
+                    ),
+                  ),
                   const SizedBox(height: 14),
                   _buildVaccinationCard(),
                   const SizedBox(height: 30),
@@ -243,82 +166,100 @@ class _HomeContentState extends State<HomeContent>
   Widget _buildHeader() {
     return Container(
       width: double.infinity,
-      color: const Color(0xFFE8915A),
-      child: SafeArea(
-        bottom: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(Icons.menu_rounded,
-                  color: Colors.white.withOpacity(0.9), size: 26),
-              const Text(
-                'الصفحة الرئيسية',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Cairo',
+      height: 100,
+      decoration: const BoxDecoration(
+        color: Color(0xFFE8915A),
+
+        // 👇 الحواف هنا
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+      ), // 👈 مهم عشان الكيرف يبان
+        child: SafeArea(
+          bottom: false,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // ✅ فتح الدروار
+                Builder(
+                  builder: (context) => IconButton(
+                    icon: const Icon(Icons.menu_rounded, color: Colors.white),
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                  ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => Scaffold(
-                        appBar: AppBar(
-                          backgroundColor: const Color(0xFFE8915A),
-                          foregroundColor: Colors.white,
-                          elevation: 0,
-                          title: const Text(
-                            'الإشعارات',
-                            style: TextStyle(
-                              fontFamily: 'Cairo',
-                              fontWeight: FontWeight.bold,
+
+                const Text(
+                  'الصفحة الرئيسية',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Cairo',
+                  ),
+                ),
+
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => Scaffold(
+                          appBar: AppBar(
+                            backgroundColor: const Color(0xFFE8915A),
+                            foregroundColor: Colors.white,
+                            elevation: 0,
+                            title: const Text(
+                              'الإشعارات',
+                              style: TextStyle(
+                                fontFamily: 'Cairo',
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            centerTitle: true,
+                            leading: IconButton(
+                              icon: const Icon(Icons.arrow_back_ios_rounded),
+                              onPressed: () => Navigator.pop(context),
                             ),
                           ),
-                          centerTitle: true,
-                          leading: IconButton(
-                            icon: const Icon(Icons.arrow_back_ios_rounded),
-                            onPressed: () => Navigator.pop(context),
-                          ),
+                          body: const NotificationsScreen(),
                         ),
-                        body: const NotificationsScreen(),
                       ),
-                    ),
-                  );
-                },
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Icon(Icons.notifications_outlined,
-                        color: Colors.white.withOpacity(0.9), size: 26),
-                    Positioned(
-                      right: -2,
-                      top: -2,
-                      child: Container(
-                        width: 9,
-                        height: 9,
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: const Color(0xFFE8915A),
-                            width: 1.5,
+                    );
+                  },
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Icon(Icons.notifications_outlined,
+                          color: Colors.white.withOpacity(0.9), size: 26),
+                      Positioned(
+                        right: -2,
+                        top: -2,
+                        child: Container(
+                          width: 9,
+                          height: 9,
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: const Color(0xFFE8915A),
+                              width: 1.5,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
   }
 
   Widget _buildGreetingSection() {
@@ -559,7 +500,7 @@ class _HomeContentState extends State<HomeContent>
   }
 
   // ─────────────────────────────────────────────
-  // VACCINATION CARD ✅ معدّل
+  // VACCINATION CARD ✅
   // ─────────────────────────────────────────────
   Widget _buildVaccinationCard() {
     return GestureDetector(
@@ -693,3 +634,28 @@ class _HomeContentState extends State<HomeContent>
     );
   }
 }
+
+class HeaderClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+
+    path.lineTo(0, size.height - 40);
+
+    path.quadraticBezierTo(
+      size.width / 2,
+      size.height + 20,
+      size.width,
+      size.height - 40,
+    );
+
+    path.lineTo(size.width, 0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+

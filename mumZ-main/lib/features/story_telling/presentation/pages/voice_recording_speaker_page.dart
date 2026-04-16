@@ -167,7 +167,7 @@ title: widget.title ,
     return Scaffold(
       backgroundColor: const Color(0xFFFFF5F0),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFD4BA),
+        backgroundColor: const Color(0xFFE8915A),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
@@ -243,7 +243,7 @@ title: widget.title ,
                         fontSize: 16,
                         color: _currentSentence < _totalSentences
                             ? Colors.black87
-                            : const Color(0xFF4CAF50),
+                            : const Color(0xFFE8915A),
                         height: 1.6,
                         fontWeight: _currentSentence >= _totalSentences
                             ? FontWeight.bold
@@ -283,7 +283,7 @@ title: widget.title ,
                     shape: BoxShape.circle,
                     color: _isRecording
                         ? Colors.red.withOpacity(0.8)
-                        : const Color(0xFFFFB399),
+                        : const Color(0xFFE8915A),
                     boxShadow: [
                       BoxShadow(
                         color: (_isRecording
@@ -313,7 +313,7 @@ title: widget.title ,
                       child: ElevatedButton(
                         onPressed: _onNextOrGenerate,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFFFB399),
+                          backgroundColor: const Color(0xFFE8915A),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
@@ -339,7 +339,7 @@ title: widget.title ,
                       child: ElevatedButton(
                         onPressed: _resetRecording,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFFFD4BA),
+                          backgroundColor: const Color(0xFFE8914A),
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),

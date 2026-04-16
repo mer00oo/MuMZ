@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mamyapp/features/auth/presentation/pages/baby_account_page.dart';
 import 'package:mamyapp/features/home/presentation/widget/drower_item.dart';
 import 'package:mamyapp/features/info/presentation/pages/about%20.dart';
 import 'package:mamyapp/features/info/presentation/pages/asked.dart';
@@ -29,7 +30,7 @@ class CustomDrawer extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(20, 60, 20, 30),
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color(0xFFFFDAB9), Color(0xFFFFCBA4)],
+                colors: [Color(0xFFE8915A), Color(0xFFE8915A)],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -38,12 +39,12 @@ class CustomDrawer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 const CircleAvatar(
-                  radius: 35,
-                  backgroundImage: AssetImage('assets/images/baby.png'),
+                  radius: 50,
+                  backgroundImage: AssetImage('assets/images/aa.png'),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 7),
                 Text(
-                  'مرحبا، $userName',
+                  'مرحبا بكٍ $userName',
                   textAlign: TextAlign.right,
                   style: const TextStyle(
                     fontSize: 18,
@@ -78,7 +79,14 @@ class CustomDrawer extends StatelessWidget {
                       icon: Icons.child_care,
                       title: 'حساب الطفل و تعديل البيانات',
                       isSelected: false,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BabyAccountPage(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

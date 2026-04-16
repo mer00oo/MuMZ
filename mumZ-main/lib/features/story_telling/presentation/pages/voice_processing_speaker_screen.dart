@@ -57,7 +57,7 @@ class VoiceProcessingSpeakerScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color(0xFFFFF5F0),
         appBar: AppBar(
-          backgroundColor: const Color(0xFFFFD4BA),
+          backgroundColor: const Color(0xFFE8915A),
           elevation: 0,
           automaticallyImplyLeading: false, // نخفي زرار الرجوع
           title: const Text(

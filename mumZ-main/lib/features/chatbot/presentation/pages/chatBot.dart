@@ -237,10 +237,10 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFFFF5EE),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFDAB9),
+        backgroundColor: const Color(0xFFE8915A),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF5D4E37)),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFFFFFFFF)),
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
@@ -248,13 +248,13 @@ class _AiAssistantScreenState extends State<AiAssistantScreen> {
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF5D4E37),
+            color: Color(0xFFFFFFFF),
           ),
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.history, color: Color(0xFF5D4E37)),
+            icon: const Icon(Icons.history, color: Color(0xFFFFFFFF)),
             tooltip: 'سجل المحادثات',
             onPressed: _showChatHistoryBottomSheet,
           ),

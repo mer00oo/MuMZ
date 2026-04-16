@@ -41,7 +41,7 @@ class _SpeakerResultPageState extends State<SpeakerResultPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFFFF5F0),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFD4BA),
+        backgroundColor: const Color(0xFFE8915A),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
