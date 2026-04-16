@@ -4,6 +4,7 @@ import 'package:mamyapp/features/chatbot/presentation/pages/chatBot.dart';
 import 'package:mamyapp/features/cry_prediction/presentation/pages/cry_page.dart';
 import 'package:mamyapp/features/story_telling/presentation/pages/choose_story.dart';
 
+import '../../../../vaccination_page.dart';
 import '../../../notifiction/presentation/pages/notifications_screen.dart';
 import '../../../setting/presentation/pages/settings_screen.dart';
 import '../../../todolist/all_milestones_page.dart';
@@ -25,22 +26,40 @@ class HomeContent extends StatefulWidget {
   State<HomeContent> createState() => _HomeContentState();
 }
 
-class _HomeContentState extends State<HomeContent> {
+class _HomeContentState extends State<HomeContent>
+    with SingleTickerProviderStateMixin {
   int currentIndex = 0;
+  late AnimationController _animController;
 
   String _calculateAge(String birthDateString) {
+    if (birthDateString.trim().isEmpty) return '';
     try {
-      DateTime birthDate = DateTime.parse(birthDateString);
-      DateTime today = DateTime.now();
+      final birthDate = DateTime.parse(birthDateString);
+      final today = DateTime.now();
       int age = today.year - birthDate.year;
       if (today.month < birthDate.month ||
           (today.month == birthDate.month && today.day < birthDate.day)) {
         age--;
       }
       return '$age سنة';
-    } catch (e) {
+    } catch (_) {
       return '';
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _animController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animController.dispose();
+    super.dispose();
   }
 
   @override
@@ -64,28 +83,33 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 
-  // ===== BOTTOM NAV  =====
   Widget _buildBottomNav() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
         color: Colors.white,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(28),
+          topRight: Radius.circular(28),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            blurRadius: 16,
-            offset: const Offset(0, -4),
+            color: const Color(0xFFE8915A).withOpacity(0.15),
+            blurRadius: 24,
+            offset: const Offset(0, -6),
           ),
         ],
       ),
       child: SafeArea(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _navItem(Icons.home_rounded, 'الرئيسية', 0),
-            _navItem(Icons.settings_rounded, 'الإعدادات', 1),
-            _navItem(Icons.task_alt_rounded, 'المهام', 2),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _navItem(Icons.home_rounded, 'الرئيسية', 0),
+              _navItem(Icons.settings_rounded, 'الإعدادات', 1),
+              _navItem(Icons.task_alt_rounded, 'المهام', 2),
+            ],
+          ),
         ),
       ),
     );
@@ -98,34 +122,52 @@ class _HomeContentState extends State<HomeContent> {
     return GestureDetector(
       onTap: () => setState(() => currentIndex = index),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
         padding: EdgeInsets.symmetric(
-          horizontal: isSelected ? 14 : 10,
-          vertical: 8,
+          horizontal: isSelected ? 18 : 12,
+          vertical: 10,
         ),
         decoration: BoxDecoration(
-          color: isSelected
-              ? selectedColor.withOpacity(0.12)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(16),
+          gradient: isSelected
+              ? const LinearGradient(
+            colors: [Color(0xFFE8915A), Color(0xFFF4B08A)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          )
+              : null,
+          color: isSelected ? null : Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: isSelected
+              ? [
+            BoxShadow(
+              color: selectedColor.withOpacity(0.35),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ]
+              : [],
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon,
-                size: 22,
-                color: isSelected ? selectedColor : Colors.grey.shade400),
+            Icon(
+              icon,
+              size: 22,
+              color: isSelected ? Colors.white : Colors.grey.shade400,
+            ),
             if (isSelected) ...[
               const SizedBox(width: 6),
               Text(
                 label,
                 style: const TextStyle(
-                  color: selectedColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 12,
+                  fontSize: 13,
+                  fontFamily: 'Cairo',
                 ),
               ),
-            ]
+            ],
           ],
         ),
       ),
@@ -162,7 +204,7 @@ class _HomeContentState extends State<HomeContent> {
                       Expanded(
                         child: _buildSmallFeatureCard(
                           title: 'قصص بصوتك',
-                          subtitle: 'اختاري قصة ودعي\nطفلك يقرأها بصوتك',
+                          subtitle: 'اختاري قصة ودعي\nطفلك يسمعها بصوتك',
                           image: 'assets/images/image (2).png',
                           onTap: () => Navigator.push(
                             context,
@@ -186,6 +228,8 @@ class _HomeContentState extends State<HomeContent> {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 14),
+                  _buildVaccinationCard(),
                   const SizedBox(height: 30),
                 ],
               ),
@@ -196,7 +240,6 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 
-  // ===== HEADER  =====
   Widget _buildHeader() {
     return Container(
       width: double.infinity,
@@ -208,11 +251,8 @@ class _HomeContentState extends State<HomeContent> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Menu icon
               Icon(Icons.menu_rounded,
                   color: Colors.white.withOpacity(0.9), size: 26),
-
-              // Title
               const Text(
                 'الصفحة الرئيسية',
                 style: TextStyle(
@@ -222,8 +262,6 @@ class _HomeContentState extends State<HomeContent> {
                   fontFamily: 'Cairo',
                 ),
               ),
-
-              // Bell → Navigator.push للإشعارات
               GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -283,11 +321,12 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 
-  // ===== GREETING SECTION =====
   Widget _buildGreetingSection() {
+    final String ageText = _calculateAge(widget.childBirth);
+
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
@@ -300,17 +339,17 @@ class _HomeContentState extends State<HomeContent> {
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        textDirection: TextDirection.rtl,
         children: [
           Container(
-            width: 60,
-            height: 60,
+            width: 64,
+            height: 64,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: const Color(0xFFFDE8D8),
               border: Border.all(
-                color: const Color(0xFFE8915A).withOpacity(0.3),
-                width: 2,
+                color: const Color(0xFFE8915A).withOpacity(0.35),
+                width: 2.5,
               ),
             ),
             child: ClipOval(
@@ -319,49 +358,67 @@ class _HomeContentState extends State<HomeContent> {
                 fit: BoxFit.cover,
                 errorBuilder: (_, __, ___) => const Icon(
                   Icons.child_care_rounded,
-                  size: 32,
+                  size: 34,
                   color: Color(0xFFE8915A),
                 ),
               ),
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                'اهلا ${widget.userName}',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF333333),
-                  fontFamily: 'Cairo',
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  widget.userName.isNotEmpty
+                      ? 'اهلا ${widget.userName} 👋'
+                      : 'اهلا 👋',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF333333),
+                    fontFamily: 'Cairo',
+                  ),
                 ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                widget.childName,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.grey.shade500,
-                  fontFamily: 'Cairo',
-                ),
-              ),
-              Text(
-                'عمر الطفل: ${_calculateAge(widget.childBirth)}',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey.shade400,
-                  fontFamily: 'Cairo',
-                ),
-              ),
-            ],
+                if (widget.childName.isNotEmpty) ...[
+                  const SizedBox(height: 3),
+                  Text(
+                    widget.childName,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.grey.shade600,
+                      fontFamily: 'Cairo',
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+                if (ageText.isNotEmpty) ...[
+                  const SizedBox(height: 2),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        ageText,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade400,
+                          fontFamily: 'Cairo',
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Icon(Icons.cake_rounded,
+                          size: 13, color: Colors.grey.shade400),
+                    ],
+                  ),
+                ],
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 
-  // ===== LARGE FEATURE CARD =====
   Widget _buildLargeFeatureCard({
     required String title,
     required String subtitle,
@@ -434,7 +491,6 @@ class _HomeContentState extends State<HomeContent> {
     );
   }
 
-  // ===== SMALL FEATURE CARD =====
   Widget _buildSmallFeatureCard({
     required String title,
     required String subtitle,
@@ -494,6 +550,141 @@ class _HomeContentState extends State<HomeContent> {
                 color: Colors.grey.shade500,
                 height: 1.4,
                 fontFamily: 'Cairo',
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ─────────────────────────────────────────────
+  // VACCINATION CARD ✅ معدّل
+  // ─────────────────────────────────────────────
+  Widget _buildVaccinationCard() {
+    return GestureDetector(
+      onTap: () {
+        // ✅ التنقل لصفحة التطعيمات
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => VaccinationPage(
+              childName: widget.childName,
+              childBirth: widget.childBirth,
+            ),
+          ),
+        );
+      },
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 100,
+              height: 110,
+              child: Image.asset(
+                'assets/images/vaccination.png',
+                fit: BoxFit.contain,
+                errorBuilder: (_, __, ___) => Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFDE8D8),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: const Icon(
+                    Icons.vaccines_rounded,
+                    size: 48,
+                    color: Color(0xFFE8915A),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  const Text(
+                    'تطعيمات الطفل',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF333333),
+                      fontFamily: 'Cairo',
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'سجلي تطعيمات طفلك وتابعي\nمواعيد الجرعات القادمة',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey.shade500,
+                      height: 1.5,
+                      fontFamily: 'Cairo',
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        // ✅ نفس التنقل من الزرار مباشرة
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => VaccinationPage(
+                              childName: widget.childName,
+                              childBirth: widget.childBirth,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 7),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFFE8915A), Color(0xFFF4B08A)],
+                            begin: Alignment.centerRight,
+                            end: Alignment.centerLeft,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0xFFE8915A).withOpacity(0.3),
+                              blurRadius: 8,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: const Text(
+                          'ابدئي الآن',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Cairo',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
