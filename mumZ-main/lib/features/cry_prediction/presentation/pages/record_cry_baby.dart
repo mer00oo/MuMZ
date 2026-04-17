@@ -4,18 +4,20 @@ import 'package:mamyapp/features/cry_prediction/data/datasources/audio_cry_local
 import 'package:mamyapp/features/cry_prediction/data/repositories/audio_cry_repository_impl.dart';
 import 'package:mamyapp/features/cry_prediction/domain/usecases/start_recording_cry_usecase.dart';
 import 'package:mamyapp/features/cry_prediction/domain/usecases/stop_recording_cry_usecase.dart';
-import 'package:mamyapp/features/cry_prediction/presentation/bloc/bloc/audio_cry_bloc.dart';
+import 'package:mamyapp/features/cry_prediction/presentation/bloc/audio_bloc/audio_cry_bloc.dart';
 import 'cry_loading_page.dart';
 // import your datasource, repository, usecases as before
 
 class RecordCryBaby extends StatelessWidget {
-  const RecordCryBaby({super.key});
+    final bool showRetryMessage;
+
+  const RecordCryBaby({super.key, this.showRetryMessage = false});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) {
-    final datasource = AudioCryLocalDatasourceImpl(); // ✅ instance واحدة
+    final datasource = AudioCryLocalDatasourceImpl();
     final repository = AudioCryRepositoryImpl(datasource);
 
     return RecordCryBloc(
@@ -29,15 +31,18 @@ class RecordCryBaby extends StatelessWidget {
 }
 
 class _RecordCryView extends StatelessWidget {
+
   const _RecordCryView();
 
   void _handleSend(BuildContext context, RecordCryState state) {
     if (state is RecordCryStopped) {
       debugPrint("Saved file: ${state.record.path}");
       Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => const CryLoadingScreen()),
-      );
+  context,
+  MaterialPageRoute(
+    builder: (_) => CryLoadingScreen(audioPath: state.record.path), 
+  ),
+);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("لم يتم تسجيل أي صوت بعد")),

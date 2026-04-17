@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:mamyapp/features/cry_prediction/presentation/pages/cry_page.dart';
-import 'package:mamyapp/features/story_telling/presentation/widget/default_button_story.dart';
 
 class ResultCryPrediction extends StatelessWidget {
-  const ResultCryPrediction({super.key});
+  final String prediction;
+  final String recommendation;
+  final double confidence;
+
+  const ResultCryPrediction({
+    super.key,
+    required this.prediction,
+    required this.recommendation,
+    required this.confidence,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-appBar: AppBar(
+    return Scaffold(
+      appBar: AppBar(
         backgroundColor: const Color(0xFFE8915A),
         elevation: 0,
         leading: IconButton(
@@ -21,63 +29,89 @@ appBar: AppBar(
         ),
         centerTitle: true,
       ),
-
       body: Center(
         child: Column(
           children: [
-             Padding(
-               padding: const EdgeInsets.only(top: 200.0,bottom: 30),
-               child: Text('نتيجة التحليل',
-               style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.w800,
-                color: Color(0xff4A4A4A)
-               ),
-                
-               ),
-             ),
-
-
-             Container(
-              width: 343,
-              height: 172,
-              decoration: BoxDecoration(
-                color: Color(0xffFFF8F4),
-                border: Border.all(color: Color(0xffFBDECD)),
-                borderRadius: BorderRadius.circular(40)
-
-              ),
-              child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 40.0),
-                  child: Text('سبب البكاء: الجوع',style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800
-                  ),),
+            const Padding(
+              padding: EdgeInsets.only(top: 200.0, bottom: 30),
+              child: Text(
+                'نتيجة التحليل',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xff4A4A4A),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Text('قد يكون طفلك جائعًا. جرّبي تقديم الرضاعة أو وجبة خفيفة.',style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w800,
-                    color: Color(0xff666666)
-                  ),),
-                )
-              ],),
-             ),
-
-             Padding(
-               padding: const EdgeInsets.only(top: 120.0,left: 20,right: 20),
-
-               child: DefaultButtonStory(text: 'اعادة المحاولة', onClick: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CryPage()));
-               }),
-             )
+              ),
+            ),
+            Container(
+              width: 343,
+              decoration: BoxDecoration(
+                color: const Color(0xffFFF8F4),
+                border: Border.all(color: const Color(0xffFBDECD)),
+                borderRadius: BorderRadius.circular(40),
+              ),
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  Text(
+                    'سبب البكاء: $prediction',
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    recommendation,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff666666),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'نسبة الدقة: ${(confidence * 100).toStringAsFixed(0)}%',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFFE8915A),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 60.0, left: 20, right: 20),
+              child: GestureDetector(
+                onTap: () => Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => const CryPage()),
+                  (route) => false,
+                ),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE8915A),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: const Text(
+                    'اعادة المحاولة',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
-      
-      
-          );
+    );
   }
 }

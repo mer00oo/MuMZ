@@ -10,6 +10,8 @@ import 'package:mamyapp/features/auth/domain/repositories/auth_repository.dart';
 import 'package:mamyapp/features/auth/domain/usecase/log_in.dart';
 import 'package:mamyapp/features/auth/domain/usecase/sign_up.dart';
 import 'package:mamyapp/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:mamyapp/features/cry_prediction/data/datasources/cry_prediction_remote_datasource.dart';
+import 'package:mamyapp/features/cry_prediction/presentation/bloc/cry_bloc/bloc/cry_prediction_bloc.dart';
 import 'package:mamyapp/features/story_telling/data/datasources/audio_remote_datasource.dart';
 import 'package:mamyapp/features/story_telling/data/datasources/audio_remote_datasource_impl.dart';
 import 'package:mamyapp/features/story_telling/data/datasources/speaker_remote_datasource.dart';
@@ -123,6 +125,14 @@ Future<void> init() async {
       uploadUseCase: sl(),
       getSavedPathsUseCase: sl(),
     ),
+  );
+
+
+  sl.registerLazySingleton<CryPredictionRemoteDatasource>(
+    () => CryPredictionRemoteDatasource(),
+  );
+  sl.registerFactory<CryPredictionBloc>(
+    () => CryPredictionBloc(datasource: sl()),
   );
 
   if (kDebugMode) {
