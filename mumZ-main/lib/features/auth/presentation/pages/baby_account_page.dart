@@ -66,16 +66,10 @@ class _BabyAccountPageState extends State<BabyAccountPage> {
                 ),
                 child: Center(
                   child: Image.asset(
-                    'assets/images/ss.jpg',
+                    'assets/images/ss.png',
                     width: 150,
                     height: 150,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Icon(
-                        Icons.child_care,
-                        size: 60,
-                        color: Color(0xFFFFB4A0),
-                      );
-                    },
+
                   ),
                 ),
               ),

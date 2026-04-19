@@ -40,9 +40,10 @@ class CustomDrawer extends StatelessWidget {
               children: [
                 const CircleAvatar(
                   radius: 50,
+                  backgroundColor: Colors.white,
                   backgroundImage: AssetImage('assets/images/aa.png'),
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: 20),
                 Text(
                   'مرحبا بكٍ $userName',
                   textAlign: TextAlign.right,
