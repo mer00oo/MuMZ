@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:mamyapp/features/home/presentation/pages/home_page.dart';
+import 'package:mamyapp/features/onboarding/presentation/splash_screen.dart';
 import 'package:mamyapp/features/story_telling/presentation/bloc/audio/audio_bloc.dart';
 import 'package:mamyapp/features/story_telling/presentation/bloc/speaker/speaker_bloc.dart';
 import 'package:mamyapp/core/di/injection_container.dart' as di;
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
           Locale('ar'),
         ],
 
-        home: HomePage(),
+        home: SplashScreen(),
       ),
     );
   }
