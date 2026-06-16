@@ -34,9 +34,7 @@ class _VirtualVoicePreviewScreenState
 
     context.read<AudioBloc>().add(
           SynthesizeStoryEvent(
-                  storyId: widget.storyId, 
-
-            
+                  storyId: widget.storyId,
             text: "مرحبًا، هذا نموذج صوت افتراضي لسرد القصص",
           ),
         );
