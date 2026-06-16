@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+// ── existing imports ───────────────────────────────────────────────────────
 import 'package:mamyapp/features/chatbot/presentation/pages/chatBot.dart';
 import 'package:mamyapp/features/cry_prediction/presentation/pages/cry_page.dart';
 import 'package:mamyapp/features/story_telling/presentation/pages/choose_story.dart';
-
 import '../../../../vaccination_page.dart';
 import '../../../notifiction/presentation/pages/notifications_screen.dart';
 import '../../../setting/presentation/pages/settings_screen.dart';
 import '../../../todolist/all_milestones_page.dart';
 import '../../../home/presentation/widget/custom_drawer.dart';
+
+// ── Baby Diary imports ─────────────────────────────────────────────────────
+import '../../../baby_diary/providers/diary_provider.dart';
+import '../../../baby_diary/screens/diary_main_screen.dart';
 
 class HomeContent extends StatefulWidget {
   final String userName;
@@ -71,8 +77,6 @@ class _HomeContentState extends State<HomeContent>
 
     return Scaffold(
       backgroundColor: const Color(0xFFFDF6EE),
-
-      // ✅ DRAWER الرئيسي
       drawer: CustomDrawer(
         userName: widget.userName,
         selectedIndex: currentIndex,
@@ -81,11 +85,9 @@ class _HomeContentState extends State<HomeContent>
           Navigator.pop(context);
         },
       ),
-
-        body: _homePage(),
+      body: _homePage(),
     );
   }
-
 
   Widget _homePage() {
     return Column(
@@ -102,6 +104,8 @@ class _HomeContentState extends State<HomeContent>
                   const SizedBox(height: 20),
                   _buildGreetingSection(),
                   const SizedBox(height: 16),
+
+                  // 1️⃣ البكاء - بالعرض كامل
                   _buildLargeFeatureCard(
                     title: 'حللي بكاء طفلك',
                     subtitle: 'سجلي صوت طفلك لتحديد سبب بكائه فوراً',
@@ -112,6 +116,8 @@ class _HomeContentState extends State<HomeContent>
                     ),
                   ),
                   const SizedBox(height: 14),
+
+                  // 2️⃣ قصص بصوتك + المساعد الذكي - مربعين جمب بعض
                   Row(
                     children: [
                       Expanded(
@@ -141,18 +147,34 @@ class _HomeContentState extends State<HomeContent>
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
-                  _buildLargeFeatureCard(
-                    title: 'المهام',
-                    subtitle: 'تابعي نمو طفلك خطوه بخطوه معنا ',
-                    image: 'assets/images/a.png',
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const AllMilestonesPage()),
-                    ),
-                  ),
                   const SizedBox(height: 14),
+
+                  // 3️⃣ التطعيمات - بالعرض كامل
                   _buildVaccinationCard(),
+                  const SizedBox(height: 14),
+
+                  // 4️⃣ المهام + المذكرات - مربعين جمب بعض
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: _buildSmallFeatureCard(
+                          title: 'المهام',
+                          subtitle: 'تابعي نمو طفلك\nخطوة بخطوة معنا',
+                          image: 'assets/images/a.png',
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const AllMilestonesPage()),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _buildDiarySmallCard(),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 30),
                 ],
               ),
@@ -163,108 +185,200 @@ class _HomeContentState extends State<HomeContent>
     );
   }
 
+  // ─── Diary Small Card (نفس شكل الكروت الصغيرة) ──────────────────────────
+  Widget _buildDiarySmallCard() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider(
+              create: (_) => DiaryProvider(),
+              child: const DiaryMainScreen(),
+            ),
+          ),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Center(
+              child: Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFF4A261), Color(0xFFFFD4B2)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      width: 55,
+                      height: 55,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withOpacity(0.2),
+                      ),
+                    ),
+                    const Icon(
+                      Icons.auto_stories_rounded,
+                      size: 36,
+                      color: Colors.white,
+                    ),
+                    Positioned(
+                      top: 10,
+                      right: 10,
+                      child: Icon(
+                        Icons.favorite,
+                        size: 12,
+                        color: Colors.white.withOpacity(0.8),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'مذكرات الطفل',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF333333),
+                fontFamily: 'Cairo',
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'سجّلي لحظات\nطفلك الجميلة 💕',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                fontSize: 11,
+                color: Colors.grey.shade500,
+                height: 1.4,
+                fontFamily: 'Cairo',
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // ─── Header ──────────────────────────────────────────────────────────────
   Widget _buildHeader() {
     return Container(
       width: double.infinity,
       height: 100,
       decoration: const BoxDecoration(
         color: Color(0xFFE8915A),
-
-        // 👇 الحواف هنا
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(30),
           bottomRight: Radius.circular(30),
         ),
-      ), // 👈 مهم عشان الكيرف يبان
-        child: SafeArea(
-          bottom: false,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // ✅ فتح الدروار
-                Builder(
-                  builder: (context) => IconButton(
-                    icon: const Icon(Icons.menu_rounded, color: Colors.white),
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  ),
+      ),
+      child: SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Builder(
+                builder: (context) => IconButton(
+                  icon: const Icon(Icons.menu_rounded, color: Colors.white),
+                  onPressed: () => Scaffold.of(context).openDrawer(),
                 ),
-
-                const Text(
-                  'الصفحة الرئيسية',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Cairo',
-                  ),
+              ),
+              const Text(
+                'الصفحة الرئيسية',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Cairo',
                 ),
-
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => Scaffold(
-                          appBar: AppBar(
-                            backgroundColor: const Color(0xFFE8915A),
-                            foregroundColor: Colors.white,
-                            elevation: 0,
-                            title: const Text(
-                              'الإشعارات',
-                              style: TextStyle(
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => Scaffold(
+                        appBar: AppBar(
+                          backgroundColor: const Color(0xFFE8915A),
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          title: const Text(
+                            'الإشعارات',
+                            style: TextStyle(
                                 fontFamily: 'Cairo',
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            centerTitle: true,
-                            leading: IconButton(
-                              icon: const Icon(Icons.arrow_back_ios_rounded),
-                              onPressed: () => Navigator.pop(context),
-                            ),
+                                fontWeight: FontWeight.bold),
                           ),
-                          body: const NotificationsScreen(),
+                          centerTitle: true,
+                          leading: IconButton(
+                            icon: const Icon(Icons.arrow_back_ios_rounded),
+                            onPressed: () => Navigator.pop(context),
+                          ),
                         ),
+                        body: const NotificationsScreen(),
                       ),
-                    );
-                  },
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Icon(Icons.notifications_outlined,
-                          color: Colors.white.withOpacity(0.9), size: 26),
-                      Positioned(
-                        right: -2,
-                        top: -2,
-                        child: Container(
-                          width: 9,
-                          height: 9,
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: const Color(0xFFE8915A),
-                              width: 1.5,
-                            ),
+                    ),
+                  );
+                },
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Icon(Icons.notifications_outlined,
+                        color: Colors.white.withOpacity(0.9), size: 26),
+                    Positioned(
+                      right: -2,
+                      top: -2,
+                      child: Container(
+                        width: 9,
+                        height: 9,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: const Color(0xFFE8915A),
+                            width: 1.5,
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    );
   }
 
+  // ─── Greeting ─────────────────────────────────────────────────────────────
   Widget _buildGreetingSection() {
     final String ageText = _calculateAge(widget.childBirth);
-
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -360,6 +474,7 @@ class _HomeContentState extends State<HomeContent>
     );
   }
 
+  // ─── Large card ───────────────────────────────────────────────────────────
   Widget _buildLargeFeatureCard({
     required String title,
     required String subtitle,
@@ -432,6 +547,7 @@ class _HomeContentState extends State<HomeContent>
     );
   }
 
+  // ─── Small card ───────────────────────────────────────────────────────────
   Widget _buildSmallFeatureCard({
     required String title,
     required String subtitle,
@@ -499,23 +615,18 @@ class _HomeContentState extends State<HomeContent>
     );
   }
 
-  // ─────────────────────────────────────────────
-  // VACCINATION CARD ✅
-  // ─────────────────────────────────────────────
+  // ─── Vaccination card ─────────────────────────────────────────────────────
   Widget _buildVaccinationCard() {
     return GestureDetector(
-      onTap: () {
-        // ✅ التنقل لصفحة التطعيمات
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => VaccinationPage(
-              childName: widget.childName,
-              childBirth: widget.childBirth,
-            ),
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => VaccinationPage(
+            childName: widget.childName,
+            childBirth: widget.childBirth,
           ),
-        );
-      },
+        ),
+      ),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(16),
@@ -532,25 +643,13 @@ class _HomeContentState extends State<HomeContent>
         ),
         child: Row(
           children: [
-            SizedBox(
+            const SizedBox(
               width: 100,
               height: 110,
-              child: Image.asset(
-                'assets/images/vaccination.png',
-                fit: BoxFit.contain,
-                errorBuilder: (_, __, ___) => Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFDE8D8),
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: const Icon(
-                    Icons.vaccines_rounded,
-                    size: 48,
-                    color: Color(0xFFE8915A),
-                  ),
-                ),
+              child: Icon(
+                Icons.vaccines_rounded,
+                size: 48,
+                color: Color(0xFFE8915A),
               ),
             ),
             const SizedBox(width: 12),
@@ -583,18 +682,15 @@ class _HomeContentState extends State<HomeContent>
                   Align(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
-                      onTap: () {
-                        // ✅ نفس التنقل من الزرار مباشرة
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => VaccinationPage(
-                              childName: widget.childName,
-                              childBirth: widget.childBirth,
-                            ),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => VaccinationPage(
+                            childName: widget.childName,
+                            childBirth: widget.childBirth,
                           ),
-                        );
-                      },
+                        ),
+                      ),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 7),
@@ -639,23 +735,14 @@ class HeaderClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
-
     path.lineTo(0, size.height - 40);
-
     path.quadraticBezierTo(
-      size.width / 2,
-      size.height + 20,
-      size.width,
-      size.height - 40,
-    );
-
+        size.width / 2, size.height + 20, size.width, size.height - 40);
     path.lineTo(size.width, 0);
     path.close();
-
     return path;
   }
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
-
